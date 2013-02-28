@@ -1,4 +1,4 @@
-# JsonPatch (unless you enjoy pain, do not use this)
+# JsonPatch (this is an experiment)
 
 this is library loosely based on the [json-patch](http://tools.ietf.org/html/draft-ietf-appsawg-json-patch-05) draft. 
 

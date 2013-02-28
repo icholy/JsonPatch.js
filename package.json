@@ -1,12 +1,12 @@
 {
-  "name": "json-patcher",
-  "version": "0.0.0",
-  "description": "Json patching library",
-  "main": "./lib/index.js",
+  "name": "jsonpatch",
+  "version": "0.0.1",
+  "description": "Json patching library (with slices)",
+  "main": "./lib/jsonpatch.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "",
+  "repository": "git@github.com:icholy/JsonPatch.js.git",
   "author": "Ilia Choly",
   "license": "MIT",
   "dependencies": {
