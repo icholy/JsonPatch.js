@@ -1,41 +1,49 @@
-# JsonPatch (this is an experiment)
+# JsonPatch with Slices (this is an experiment)
 
-this is library loosely based on the [json-patch](http://tools.ietf.org/html/draft-ietf-appsawg-json-patch-05) draft. 
+This is library loosely based on the [json-patch](http://tools.ietf.org/html/draft-ietf-appsawg-json-patch-05) draft.
 
-The one thing that this library has that the draft doesn't is slices.
-
+The project was motivated by an [earlier rant](https://gist.github.com/icholy/5050533)
 
 **Original Data**
 
 ``` javascript
+
+var JsonPatch = require('jsonpatch'),
+    patcher = new JsonPatch();
+
 var someData = {
 	foo: [
 		{ x: 1 },
 		{ y: 2 }
-	] 
+	]
 };
+```
+
+**Remove slice**
+
+``` javascript
+patcher.apply(someData, [{ op: 'remove', path: '/foo/0:2'}] );
+
+// resulting object
+{
+  foo: [],
+}
 ```
 
 **Move slice contents**
 
 ``` javascript
-var patcher = new JsonPatch();
+patcher.apply(someData, [{ op: 'move', path: '/foo/0:2/x', to: '/bar' }] );
 
-patcher.apply(someData, [{ op: 'move', from: '/foo/0:2/x', to: '/bar' }] );
+// resulting object
+{
+  foo: [
+    {},
+    {}
+  ],
+  bar: [1, 2]
+}
 ```
-
-**Resulting Data**
-
-``` javascript
-var someData = {
-	foo: [
-		{},
-		{}
-	],
-	bar: [1, 2]
-};
-```
-
 cool eh? Splices can be used with the other operations too: 
 
 * `add`
@@ -43,3 +51,6 @@ cool eh? Splices can be used with the other operations too:
 * `replace`
 * `move`
 * `copy`
+
+See more examples in the [test](https://github.com/icholy/JsonPatch.js/blob/master/test/example.js)
+
