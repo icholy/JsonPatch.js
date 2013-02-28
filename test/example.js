@@ -105,22 +105,22 @@ describe('JsonPatch', function () {
     describe('move', function () {
 
       it('should move basic properties', function () {
-        patcher.apply(data, [{ op: 'move', from: '/who/what/where', to: '/who/what/when' }]);
+        patcher.apply(data, [{ op: 'move', path: '/who/what/where', to: '/who/what/when' }]);
         assert.equal(data.who.what.when, "here");
         assert.isUndefined(data.who.what.where);
       });
 
       it('should move objects', function () {
-        patcher.apply(data, [{ op: 'move', from: '/who', to: '/poo' }]);
+        patcher.apply(data, [{ op: 'move', path: '/who', to: '/poo' }]);
         assert.isUndefined(data.who);
         assert.equal(data.poo.what.where, "here");
       });
 
       it('should move slices', function () {
-        //patcher.apply(data, [{ op: 'move', from: '/bar/0:2', to: '/poo' }]);
-        // assert.lengthOf(data.bar, 3);
-        // assert.lengthOf(data.poo, 2);
-        // assert.deepEqual(data.poo, [1, 2]);
+        patcher.apply(data, [{ op: 'move', path: '/bar/0:2', to: '/poo' }]);
+        assert.lengthOf(data.bar, 3);
+        assert.lengthOf(data.poo, 2);
+        assert.deepEqual(data.poo, [1, 2]);
       });
     });
 
