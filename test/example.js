@@ -1,5 +1,5 @@
 var assert = require('chai').assert,
-    JsonPatch = require('../lib');
+    JsonPatch = require('../lib/jsonpatch.js');
 
 describe('JsonPatch', function () {
 

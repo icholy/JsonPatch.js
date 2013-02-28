@@ -1,87 +1,83 @@
-var jsonPatch = require('../lib/index.js'),
-	assert = require('chai').assert;
+var jsonPatch = require('../lib/jsonpatch.js'),
+		jsonPointer = require('../lib/jsonpointer.js'),
+		assert = require('chai').assert;
 
-describe('JsonPatch', function () {
+var patcher, A;
 
-	var patcher, A;
-
-	beforeEach(function () {
-		patcher = new jsonPatch();
-		A = {
-			foo: "hello world",
-			bar: [1, 2, 3, 4],
-			baz: [
-				{ x: "a" },
-				{ x: "b" },
-				{ x: "c" },
-				{ x: "d" }
-			],
-			who: { what: { where: "why?" } }
-		};
-	});
-
-
-	var c = function (p) {
-		return patcher.compilePointer(p)(A);
+beforeEach(function () {
+	patcher = new jsonPatch();
+	A = {
+		foo: "hello world",
+		bar: [1, 2, 3, 4],
+		baz: [
+			{ x: "a" },
+			{ x: "b" },
+			{ x: "c" },
+			{ x: "d" }
+		],
+		who: { what: { where: "why?" } }
 	};
+});
 
-	describe('#compilePointer', function () {
+
+var c = function (p) {
+	return jsonPointer.apply(p, A);
+};
+
+describe('jsonPointer', function () {
+	describe('#apply', function () {
 
 		it('should correctly get a value 1 level deep', function () {
-			var cmp = patcher.compilePointer('/foo'),
-				result = cmp(A).val;
+			var result = c('/foo').val;
 			assert.equal(result, "hello world");
 		});
 
 		it('should correctly get a value multiple levels deep', function () {
-			var cmp = patcher.compilePointer('/who/what/where'),
-				result = cmp(A).val;
+			var result = c('/who/what/where').val;
 			assert.equal(result, "why?");
 		});
 
 		it('should work with array indices', function () {
-			var cmp = patcher.compilePointer('/baz/0/x'),
-				result = cmp(A).val;
+			var result = c('/baz/0/x').val;
 			assert.equal(result, "a");
 		});
 
 		it('should work with slices', function () {
-			var cmp = patcher.compilePointer('/baz/0:1/x'),
-				result = cmp(A);
+			var result = c('/baz/0:1/x');
 			assert.typeOf(result, "array");
 			assert.lengthOf(result, 1);
 			assert.equal(result[0].val, "a");
 		});
 
 		it('should have a index type for array elements', function () {
-			var cmp = patcher.compilePointer('/baz/0'),
-				result = cmp(A);
+			var result = c('/baz/0');
 			assert.equal(result.type, 'index');
 		});
 
 		it('should work with slices', function () {
-			var cmp = patcher.compilePointer('/baz/0:1/x'),
-				result = cmp(A);
+			var result = c('/baz/0:1/x');
 			assert.typeOf(result, "array");
 			assert.lengthOf(result, 1);
 			assert.equal(result[0].val, "a");
 		});
 
 		it('should have the parent and accessor', function () {
-			var cmp = patcher.compilePointer('/foo'),
-				result = cmp(A);
+			var result = c('/foo');
 			assert.property(result, 'parent');
 			assert.property(result, 'accessor');
 			assert.equal(result.parent[result.accessor], result.val);
 		});
 
 		it('should have a working accessor for arrays', function () {
-			var cmp = patcher.compilePointer('/bar/1'),
-				result = cmp(A);
+			var result = c('/bar/1');
 			assert.equal(result.parent[result.accessor], result.val);
 		});
 	});
 
+});
+
+describe('JsonPatch', function () {
+	
 	describe('#remove', function () {
 
 		it('should remove a property', function () {
