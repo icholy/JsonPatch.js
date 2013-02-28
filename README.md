@@ -52,5 +52,5 @@ cool eh? Splices can be used with the other operations too:
 * `move`
 * `copy`
 
-See more examples in the [test](https://github.com/icholy/JsonPatch.js/blob/master/test/example.js)
+See more examples in the [tests](https://github.com/icholy/JsonPatch.js/blob/master/test/example.js)
 
