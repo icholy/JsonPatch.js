@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Jsonpatch.js by icholy</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Jsonpatch.js</h1>
+        <p>experimenting with slices in Json pointers and patches</p>
+
+        <p class="view"><a href="https://github.com/icholy/JsonPatch.js">View the Project on GitHub <small>icholy/JsonPatch.js</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/icholy/JsonPatch.js/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/icholy/JsonPatch.js/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/icholy/JsonPatch.js">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>JsonPatch with Slices (this is an experiment)</h1>
+
+<p>This is library loosely based on the <a href="http://tools.ietf.org/html/draft-ietf-appsawg-json-patch-05">json-patch</a> draft.</p>
+
+<p>The project was motivated by an <a href="https://gist.github.com/icholy/5050533">earlier rant</a></p>
+
+<p><strong>Original Data</strong></p>
+
+<div class="highlight"><pre>
+<span class="kd">var</span> <span class="nx">JsonPatch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'jsonpatch'</span><span class="p">),</span>
+    <span class="nx">patcher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">JsonPatch</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">someData</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">foo</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">1</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">2</span> <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">};</span>
+</pre></div>
+
+<p><strong>Remove slice</strong></p>
+
+<div class="highlight"><pre><span class="nx">patcher</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">someData</span><span class="p">,</span> <span class="p">[{</span> <span class="nx">op</span><span class="o">:</span> <span class="s1">'remove'</span><span class="p">,</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">'/foo/0:2'</span><span class="p">}]</span> <span class="p">);</span>
+
+<span class="c1">// resulting object</span>
+<span class="p">{</span>
+  <span class="nx">foo</span><span class="o">:</span> <span class="p">[],</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><strong>Move slice contents</strong></p>
+
+<div class="highlight"><pre><span class="nx">patcher</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">someData</span><span class="p">,</span> <span class="p">[{</span> <span class="nx">op</span><span class="o">:</span> <span class="s1">'move'</span><span class="p">,</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">'/foo/0:2/x'</span><span class="p">,</span> <span class="nx">to</span><span class="o">:</span> <span class="s1">'/bar'</span> <span class="p">}]</span> <span class="p">);</span>
+
+<span class="c1">// resulting object</span>
+<span class="p">{</span>
+  <span class="nx">foo</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{},</span>
+    <span class="p">{}</span>
+  <span class="p">],</span>
+  <span class="nx">bar</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>cool eh? Splices can be used with the other operations too: </p>
+
+<ul>
+<li><code>add</code></li>
+<li><code>remove</code></li>
+<li><code>replace</code></li>
+<li><code>move</code></li>
+<li><code>copy</code></li>
+</ul><p>See more examples in the <a href="https://github.com/icholy/JsonPatch.js/blob/master/test/example.js">tests</a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/icholy">icholy</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
