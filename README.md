@@ -44,7 +44,7 @@ patcher.apply(someData, [{ op: 'move', path: '/foo/0:2/x', to: '/bar' }] );
   bar: [1, 2]
 }
 ```
-cool eh? Splices can be used with the other operations too: 
+cool eh? Slices can be used with the other operations too: 
 
 * `add`
 * `remove`
