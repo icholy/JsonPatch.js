@@ -124,9 +124,7 @@ describe('JsonPatch', function () {
       });
     });
 
-    describe('copy', function () {
-
-    });
+    describe('copy', function () {});
 
   })
 });

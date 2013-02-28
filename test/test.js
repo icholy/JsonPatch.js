@@ -1,5 +1,6 @@
 var jsonPatch = require('../lib/jsonpatch.js'),
 		jsonPointer = require('../lib/jsonpointer.js'),
+		helpers = require('../lib/helpers.js'),
 		assert = require('chai').assert;
 
 var patcher, A;
@@ -244,5 +245,88 @@ describe('JsonPatch', function () {
 			assert.lengthOf(A.baz, 5);
 			assert.deepEqual(A.baz.slice(0, 2), [2, 3]);
 		});
+	});
+});
+
+describe('helpers', function () {
+	describe('#sliceUtil', function () {
+		it('should get the correct simple slice', function () {
+			var arr = helpers.sliceUtil(0, 1, [1, 2, 3]);
+			assert.deepEqual(arr, [1]);
+		});
+
+		it('should work without a start index', function () {
+			var arr = helpers.sliceUtil(undefined, 2, [1, 2, 3, 4]);
+			assert.deepEqual(arr, [1, 2]);
+		});
+
+		it('should work without an end index', function () {
+			var arr = helpers.sliceUtil(-2, undefined, [1, 2, 3, 4]);
+			assert.deepEqual(arr, [3, 4]);
+		});
+
+		it('should work with a negative end index', function () {
+			var arr = helpers.sliceUtil(0, -1, [1, 2, 3, 4]);
+			assert.deepEqual(arr, [1, 2, 3]);
+		});
+
+		it('should work with no start index and a negative end index', function () {
+			var arr = helpers.sliceUtil(undefined, -2, [1, 2, 3, 4, 5]);
+			assert.deepEqual(arr, [1, 2, 3]);
+		});
+
+		it('should return the whole array if there is no start or end', function () {
+			var arr = helpers.sliceUtil(undefined, undefined, [1, 2, 3]);
+			assert.deepEqual(arr, [1, 2, 3]);
+		});
+	});
+
+	describe('#spliceUtil', function () {
+		it('should get the correct simple slice', function () {
+			var arr = helpers.spliceUtil(0, 1, [1, 2, 3]);
+			assert.deepEqual(arr, [1]);
+		});
+
+		it('should work without a start index', function () {
+			var arr = helpers.spliceUtil(undefined, 2, [1, 2, 3, 4]);
+			assert.deepEqual(arr, [1, 2]);
+		});
+
+		it('should work without an end index', function () {
+			var arr = helpers.spliceUtil(-2, undefined, [1, 2, 3, 4]);
+			assert.deepEqual(arr, [3, 4]);
+		});
+
+		it('should work with a negative end index', function () {
+			var arr = helpers.spliceUtil(0, -1, [1, 2, 3, 4]);
+			assert.deepEqual(arr, [1, 2, 3]);
+		});
+
+		it('should work with no start index and a negative end index', function () {
+			var arr = helpers.spliceUtil(undefined, -2, [1, 2, 3, 4, 5]);
+			assert.deepEqual(arr, [1, 2, 3]);
+		});
+
+		it('should return the whole array if there is no start or end', function () {
+			var arr = helpers.spliceUtil(undefined, undefined, [1, 2, 3]);
+			assert.deepEqual(arr, [1, 2, 3]);
+		});
+
+		it('should return an empty array when called with 0,0', function () {
+			var arr = helpers.spliceUtil(0,0,[1, 2, 3]);
+			assert.lengthOf(arr, 0);
+		});
+
+		it('should splice in the 4th parameter', function () {
+			var arr = [1, 2, 3, 4, 5];
+			helpers.spliceUtil(0, 1, arr, "hi");
+			assert.equal(arr[0], "hi");
+		});
+
+		it('should splice in an array of values', function () {
+			var arr = [1, 2, 3, 4, 5];
+			helpers.spliceUtil(0, 4, arr, ["this", "is", "a", "test"]);
+			assert.deepEqual(arr, ["this", "is", "a", "test", 5]);
+		})
 	});
 });
