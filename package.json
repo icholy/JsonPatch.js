@@ -4,7 +4,7 @@
   "description": "Json patching library (with slices)",
   "main": "./lib/jsonpatch.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./test/"
   },
   "repository": "git@github.com:icholy/JsonPatch.js.git",
   "author": "Ilia Choly",
