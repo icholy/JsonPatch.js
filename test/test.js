@@ -327,6 +327,6 @@ describe('helpers', function () {
 			var arr = [1, 2, 3, 4, 5];
 			helpers.spliceUtil(0, 4, arr, ["this", "is", "a", "test"]);
 			assert.deepEqual(arr, ["this", "is", "a", "test", 5]);
-		})
+		});
 	});
 });

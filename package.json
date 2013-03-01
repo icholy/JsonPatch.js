@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "mocha": "~1.8.1",
-    "chai": "~1.5.0"
+    "chai": "~1.5.0",
+    "underscore": "~1.4.4"
   }
 }
