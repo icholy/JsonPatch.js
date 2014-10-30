@@ -1,6 +1,6 @@
 # JsonPatch with Slices (this is an experiment) [![Build Status](https://travis-ci.org/icholy/JsonPatch.js.png?branch=master)](https://travis-ci.org/icholy/JsonPatch.js)
 
-This is library loosely based on the [json-patch](http://tools.ietf.org/html/draft-ietf-appsawg-json-patch-05) draft.
+This is loosely based on the [json-patch](http://tools.ietf.org/html/draft-ietf-appsawg-json-patch-05) draft.
 
 The project was motivated by an [earlier rant](https://gist.github.com/icholy/5050533)
 
